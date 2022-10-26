@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B605259229013DDA00395D95 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B605259129013DDA00395D95 /* main.cpp */; };
+		B60525A429013E2700395D95 /* x3encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B605259829013E2700395D95 /* x3encoder.cpp */; };
+		B60525A529013E2700395D95 /* bpack.c in Sources */ = {isa = PBXBuildFile; fileRef = B605259929013E2700395D95 /* bpack.c */; };
+		B60525A629013E2700395D95 /* x3frame.c in Sources */ = {isa = PBXBuildFile; fileRef = B605259F29013E2700395D95 /* x3frame.c */; };
+		B60525A729013E2700395D95 /* x3cmp.c in Sources */ = {isa = PBXBuildFile; fileRef = B60525A029013E2700395D95 /* x3cmp.c */; };
+		B60525A829013E2700395D95 /* xml_if.c in Sources */ = {isa = PBXBuildFile; fileRef = B60525A129013E2700395D95 /* xml_if.c */; };
+		B60525A929013E2700395D95 /* crc16v3.c in Sources */ = {isa = PBXBuildFile; fileRef = B60525A329013E2700395D95 /* crc16v3.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +31,19 @@
 /* Begin PBXFileReference section */
 		B605258E29013DDA00395D95 /* X3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = X3; sourceTree = BUILT_PRODUCTS_DIR; };
 		B605259129013DDA00395D95 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		B605259829013E2700395D95 /* x3encoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = x3encoder.cpp; sourceTree = "<group>"; };
+		B605259929013E2700395D95 /* bpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bpack.c; sourceTree = "<group>"; };
+		B605259A29013E2700395D95 /* crc16v3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc16v3.h; sourceTree = "<group>"; };
+		B605259B29013E2700395D95 /* x3encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x3encoder.h; sourceTree = "<group>"; };
+		B605259C29013E2700395D95 /* x3cmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x3cmp.h; sourceTree = "<group>"; };
+		B605259D29013E2700395D95 /* bpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bpack.h; sourceTree = "<group>"; };
+		B605259E29013E2700395D95 /* x3frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = x3frame.h; sourceTree = "<group>"; };
+		B605259F29013E2700395D95 /* x3frame.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = x3frame.c; sourceTree = "<group>"; };
+		B60525A029013E2700395D95 /* x3cmp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = x3cmp.c; sourceTree = "<group>"; };
+		B60525A129013E2700395D95 /* xml_if.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xml_if.c; sourceTree = "<group>"; };
+		B60525A229013E2700395D95 /* xml_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml_if.h; sourceTree = "<group>"; };
+		B60525A329013E2700395D95 /* crc16v3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc16v3.c; sourceTree = "<group>"; };
+		B6954FBB290583AA00BC260C /* testWav.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = testWav.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +77,19 @@
 			isa = PBXGroup;
 			children = (
 				B605259129013DDA00395D95 /* main.cpp */,
+				B605259929013E2700395D95 /* bpack.c */,
+				B605259D29013E2700395D95 /* bpack.h */,
+				B60525A329013E2700395D95 /* crc16v3.c */,
+				B605259A29013E2700395D95 /* crc16v3.h */,
+				B60525A029013E2700395D95 /* x3cmp.c */,
+				B605259C29013E2700395D95 /* x3cmp.h */,
+				B605259829013E2700395D95 /* x3encoder.cpp */,
+				B605259B29013E2700395D95 /* x3encoder.h */,
+				B605259F29013E2700395D95 /* x3frame.c */,
+				B605259E29013E2700395D95 /* x3frame.h */,
+				B60525A129013E2700395D95 /* xml_if.c */,
+				B60525A229013E2700395D95 /* xml_if.h */,
+				B6954FBB290583AA00BC260C /* testWav.txt */,
 			);
 			path = X3;
 			sourceTree = "<group>";
@@ -119,7 +151,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B60525A629013E2700395D95 /* x3frame.c in Sources */,
+				B60525A529013E2700395D95 /* bpack.c in Sources */,
+				B60525A929013E2700395D95 /* crc16v3.c in Sources */,
+				B60525A829013E2700395D95 /* xml_if.c in Sources */,
 				B605259229013DDA00395D95 /* main.cpp in Sources */,
+				B60525A729013E2700395D95 /* x3cmp.c in Sources */,
+				B60525A429013E2700395D95 /* x3encoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
