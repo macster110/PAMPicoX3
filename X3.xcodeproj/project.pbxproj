@@ -14,6 +14,7 @@
 		B60525A729013E2700395D95 /* x3cmp.c in Sources */ = {isa = PBXBuildFile; fileRef = B60525A029013E2700395D95 /* x3cmp.c */; };
 		B60525A829013E2700395D95 /* xml_if.c in Sources */ = {isa = PBXBuildFile; fileRef = B60525A129013E2700395D95 /* xml_if.c */; };
 		B60525A929013E2700395D95 /* crc16v3.c in Sources */ = {isa = PBXBuildFile; fileRef = B60525A329013E2700395D95 /* crc16v3.c */; };
+		B6B1943929140A6300B8B6D7 /* SudWrite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B1943729140A6300B8B6D7 /* SudWrite.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,8 @@
 		B60525A229013E2700395D95 /* xml_if.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml_if.h; sourceTree = "<group>"; };
 		B60525A329013E2700395D95 /* crc16v3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc16v3.c; sourceTree = "<group>"; };
 		B6954FBB290583AA00BC260C /* testWav.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = testWav.txt; sourceTree = "<group>"; };
+		B6B1943729140A6300B8B6D7 /* SudWrite.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SudWrite.cpp; sourceTree = "<group>"; };
+		B6B1943A291555D100B8B6D7 /* SudWrite.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SudWrite.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,8 @@
 		B605259029013DDA00395D95 /* X3 */ = {
 			isa = PBXGroup;
 			children = (
+				B6B1943729140A6300B8B6D7 /* SudWrite.cpp */,
+				B6B1943A291555D100B8B6D7 /* SudWrite.h */,
 				B605259129013DDA00395D95 /* main.cpp */,
 				B605259929013E2700395D95 /* bpack.c */,
 				B605259D29013E2700395D95 /* bpack.h */,
@@ -155,6 +160,7 @@
 				B60525A529013E2700395D95 /* bpack.c in Sources */,
 				B60525A929013E2700395D95 /* crc16v3.c in Sources */,
 				B60525A829013E2700395D95 /* xml_if.c in Sources */,
+				B6B1943929140A6300B8B6D7 /* SudWrite.cpp in Sources */,
 				B605259229013DDA00395D95 /* main.cpp in Sources */,
 				B60525A729013E2700395D95 /* x3cmp.c in Sources */,
 				B60525A429013E2700395D95 /* x3encoder.cpp in Sources */,
