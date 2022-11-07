@@ -195,8 +195,7 @@ int X3_prepareXMLheader(char* s, int sampleRate, int nChan, int blockSize) {
 	closexmlfield(s,"CODEC") ;
 	closexmlfield(s,"CFG") ;
 	closexmlfield(s,"X3ARCH") ;
-
-
+    
 	return strlen(s);
 }
 

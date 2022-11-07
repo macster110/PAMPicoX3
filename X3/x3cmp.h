@@ -34,7 +34,7 @@ typedef unsigned char	   uchar ;
 #endif
 
 // X3 loss-less audio compression default parameters */
-#define	X3_DEF_N	      (20)
+#define	X3_DEF_N	      (16) //the block length - note that SoundTraps use 16 whilst the default here is 20
 #define X3_DEF_NT      (3)
 #define	X3_DEF_T	      {3,8,20}
 

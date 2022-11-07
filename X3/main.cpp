@@ -7,20 +7,21 @@
 
 #include <iostream>
 #include <fstream>
-#include "x3encoder.h" //don't know why I can't user header file here.
-#include "x3frame.h" //don't know why I can't user header file here.
+#include "x3encoder.h"
+#include "x3frame.h"
+#include "SudWrite.h"
+
 
 /**
- * @brief Encodes wav chunks into X3 data
+ * @brief Test X3 encoding and decoding.
  *
- * To build in VS code. In top menu go to Terminal-> Run Build Task. Select C/C++ g++ buold active file.
+ *  Imports some wav data (the first chunk of a SoundTrap file) encodes into X3 and decodes back into a raw wav file.
+ *  The code then checks all the samples between the original and new file are the same.
+ *  <p>
+ *  Note the purpose of this was to test Mark's C library against the sud files produced by the SoundTrap. The main
+ *  sticking point was that the default blklen for a SoundTrap is 16 whilst the blocklen define in x3cmp.h X3_DEF_N i=20
  *
- * To run in VS code navigate to directory in TERMINAL and then run the build file i.e. ./X3Main
- *
- * SudFileX3Test.java decompresses the first chunk of a sud file, prints out the data and saves the wav data in a text file. This
- * can be used to compare the X3 writing capablity here.
- *
- * @return int
+ * @return  - nothing.
  */
 #define MAXWAV (10000)
 
@@ -129,14 +130,68 @@ int main()
     std::cout << "Are all bytes equal after compression? " << equalbytes << std::endl;
     
     std::cout << "Finish X3 test" << std::endl;
-    //12,14,-86,106,49,54,106,85,106,44,-75,-88,52,86,53,106,69,99- first bytes for X3 from Java
+    //12,14,-86,106,49,54,106,85,106,44,-75,-88,52,86,53,106,69,99- first bytes for X3 from Jav
+    
+    //Begin the sud test
+    
+    std::cout << "Begin .sud test" << std::endl;
+    
+    std::ofstream wf("/Users/au671271/Library/Mobile Documents/com~apple~CloudDocs/Dev/X3/X3/test_sud.sud", std::ios::out | std::ios::binary);
+    
+    if(!wf) {
+        std::cout << "Cannot open file!" << std::endl;
+       return 1;
+    }
+    
+    char buf[10000];
+    int samplerate = 576000;
+    int nchan = 1;
+    int blockSize = 16;
+    
+    char *bufptr = &buf[0];
+    
+    //get the current system time.
+    time_t unixtime;
+    unixtime = time(NULL);
+    
+    SudHeader sudHeader;
+    sudHeader.unixtime = unixtime;
+    
+    std::cout << "Current unix time: " << unixtime << std::endl;
+    
+    bufptr += writeSudHeader(bufptr, &sudHeader);
+    
+    
+    //write the X3 header to the file
+    bufptr += writeX3Header(bufptr,   samplerate,  nchan,  blockSize, unixtime);
+    
+    
+    std::cout << "Write " << bufptr -&buf[0] << " bytes to file" << std::endl;
+
+    wf.write(&buf[0], (bufptr -&buf[0])+1);
+    
+//    int CHUNK_DATA_LEN = 2000;
+//    char chunkData[CHUNK_DATA_LEN];
+//    
+//    SudChunk sudChunk;
+//    sudChunk.unixtime = seconds;
+//    sudChunk.data = chunkData;
+//    sudChunk.datalen = CHUNK_DATA_LEN;
+//    
+//    bufptr += writeSudChunk(bufptr, &sudChunk);
+//    
+//    openxmlfield(chunkData,"1", "2");
+
+    
+    wf.close();
+       if(!wf.good()) {
+          std::cout << "Error occurred at writing time!" << std::endl;
+          return 1;
+    }
+    
+    std::cout << "Finish .sud test" << std::endl;
+    
+    
+
 
 }
-
-
-
-//int main(int argc, const char * argv[]) {
-//    // insert code here...
-//    std::cout << "Hello, World!\n";
-//    return 0;
-//}

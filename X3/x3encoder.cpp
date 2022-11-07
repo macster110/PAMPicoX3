@@ -4,8 +4,8 @@
 #include "x3cmp.h"
 #include <iostream>
 
-short  PICOBUFF[MAXFRAME+X3_HDRLEN] ;
 
+short  PICOBUFF[MAXFRAME+X3_HDRLEN] ;
 
 int16_t htons2(int16_t hostshort) {
   return ((hostshort & 0xff) << 8) | (hostshort >> 8);
@@ -13,6 +13,8 @@ int16_t htons2(int16_t hostshort) {
 
 
 XBuff x3compress(short* data, ushort nChan, ushort soundFrames){
+    
+    
 	XBuff ibuff[1];
 	ibuff->data = data;
 	ibuff->nch = nChan;

@@ -29,20 +29,20 @@
 
 #define METANAME "x3metafile"
 #define XMLSTARTMESS "X"
-FILE     *xml_open(fname,s)
-{
- char    s1[100] = XML_START ;
-
- // add an encapsulating field to the metadata message to make it correct
- strcat(s1,s) ;
-
- // parse the xml message in s and open output files for each defined configuration
- FILE* xid = fopen(METANAME,"wt") ;
- fprintf(xid,XMLSTARTMESS) ;
- fwrite(xid,s,sizeof(char),0) ;
- strcat(s1,XML_END) ;
- return(xid) ;
-}
+//FILE     *xml_open(fname,s)
+//{
+// char    s1[100] = XML_START ;
+//
+// // add an encapsulating field to the metadata message to make it correct
+// strcat(s1,s) ;
+//
+// // parse the xml message in s and open output files for each defined configuration
+// FILE* xid = fopen(METANAME,"wt") ;
+// fprintf(xid,XMLSTARTMESS) ;
+// fwrite(xid,s,sizeof(char),0) ;
+// strcat(s1,XML_END) ;
+// return(xid) ;
+//}
 
 
 void     xml_close(FILE *xid)

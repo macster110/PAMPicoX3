@@ -23,23 +23,31 @@
 #ifndef XML_IF_H_
 #define XML_IF_H_
 
-#ifndef X3DEFS
-#define X3DEFS
-  typedef unsigned long	   ulong ;
-  typedef unsigned short	ushort ;
-  typedef unsigned char	   uchar ;
+ #ifndef X3DEFS
+  #define X3DEFS
+  typedef unsigned long       ulong ;
+  typedef unsigned short    ushort ;
+  typedef unsigned char       uchar ;
   #define MIN(a,b)    (((a)<(b)) ? (a) : (b))
   #define MAX(a,b)    (((a)>(b)) ? (a) : (b))
-#endif
+ #endif
 
  #define  XMLSTARTMESS   "<?xml version=\"1.0\" encoding=\"US-ASCII\" ?>\n"
 
- // xml i/o functions
- FILE     *xml_open(char* fname, char* s);
+// // xml i/o functions
+// FILE     *xml_open(char* fname, char* s);
+
+#ifdef __cplusplus //don't know why but this is important for C++
+extern "C" {
+#endif
 
  // xml message creation functions
   int   openxmlfield(char *s, const char *field, const char *arg) ;
- extern int   addxmlfield(char *s, const char *field, const char *arg, const char *value) ;
- extern int   closexmlfield(char *s, const char *field) ;
+  int   addxmlfield(char *s, const char *field, const char *arg, const char *value) ;
+  int   closexmlfield(char *s, const char *field) ;
 
+#endif
+
+#ifdef __cplusplus
+}
 #endif

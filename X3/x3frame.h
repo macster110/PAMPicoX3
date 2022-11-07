@@ -44,11 +44,11 @@ typedef unsigned char uchar;
 // but this will do.
 #define X3HEADLEN 500
 
-/*
- * Number of samples for X3 mini blocks.
- * NB. this is hard coded in many places at the moment - needs sorting out.
- */
-#define X3BLOCKSIZE 20
+///*
+// * Number of samples for X3 mini blocks.
+// * NB. this is hard coded in many places at the moment - needs sorting out.
+// */
+//#define X3BLOCKSIZE 20
 
 // 16 bit start of frame key
 #define X3_KEY      (30771)     // frame header key for X3 v2.0
