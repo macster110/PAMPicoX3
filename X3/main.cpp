@@ -29,30 +29,44 @@ int main()
 {
     
     std::cout << "Begin X3 test" << std::endl;
-
-    //open a wav file of data.
-    FILE *file;
-    file = fopen("/Users/au671271/Library/Mobile Documents/com~apple~CloudDocs/Dev/X3/X3/testWav.txt", "r");
-//    int NUM_SAMPLES = 2848;
     
-    int printN = 50; //the maximum number of samples to print.
-
+    int i=0;
+    int nwav;
     //create the a new array of samples.
     short wavdata[MAXWAV];
 
-    int i=0;
-
-    while (fscanf(file, "%hd", &wavdata[i]) != EOF)
-    {
-      i++;
-    }
-    fclose(file);
+    int printN = 50; //the maximum number of samples to print.
     
-    int nwav =i;
+    
+    
+    /**** Import data from a text file ****/
+//    //open a wav file of data.
+//    FILE *file;
+//    file = fopen("/Users/au671271/Library/Mobile Documents/com~apple~CloudDocs/Dev/X3/X3/testWav.txt", "r");
+////    int NUM_SAMPLES = 2848;
+//
+//    //import the wavdata into an array from text file
+//    while (fscanf(file, "%hd", &wavdata[i]) != EOF)
+//    {
+//      i++;
+//    }
+//    nwav =i
+//    fclose(file);
+    
+    /**** Create a saw tooth wave ****/
+    int sawmod = 30;
+    for (int i=0; i<MAXWAV; i++){
+        wavdata[i] =  i%sawmod -  (sawmod/2);
+    }
+    
+    nwav =MAXWAV;
+    
+    printf("NWAV %d, ", nwav);
+
 
     wavdata[i] = '\0';
 
-    std::cout << "Imported Wav bytes" << std::endl;
+    std::cout << "Imported "<< 2*nwav << " wav bytes" << std::endl;
     
     char* wavBytesIn = (char*) wavdata;
     //print the original wav data
@@ -93,7 +107,7 @@ int main()
 //    }
 //    printf("\n");
 
-    std::cout << "X3 compressed bytes: " << std::endl;
+    std::cout << "X3 compressed to " << x3buff.nsamps*2 << " bytes: " << std::endl;
     char* x3Bytes = (char*) x3buff.data;
     
     for (j = 0; j<MIN(x3buff.nsamps*2, printN); j++){
@@ -108,7 +122,7 @@ int main()
 
     X3_uncompress_def(&obuff,&x3buff);
     
-    std::cout << "Wav bytes uncompressed: " << std::endl;
+    std::cout << "Decompressed "<< obuff.nsamps*2 << " wav bytes" << std::endl;
 
 //
     char* wavBytesOut = (char*) obuff.data;
@@ -130,6 +144,9 @@ int main()
     std::cout << "Are all bytes equal after compression? " << equalbytes << std::endl;
     
     std::cout << "Finish X3 test" << std::endl;
+    std::cout << "----------------------------" << std::endl;
+    std::cout << "" << std::endl;
+
     //12,14,-86,106,49,54,106,85,106,44,-75,-88,52,86,53,106,69,99- first bytes for X3 from Jav
     
     //Begin the sud test
@@ -143,10 +160,12 @@ int main()
        return 1;
     }
     
-    char buf[10000];
+    char buf[1000000];
     int samplerate = 576000;
     int nchan = 1;
     int blockSize = 16;
+    int nBits = 16;
+    short bitShift = 0;
     
     char *bufptr = &buf[0];
     
@@ -161,15 +180,30 @@ int main()
     
     bufptr += writeSudHeader(bufptr, &sudHeader);
     
-    
+    std::cout << "X3 XML Header" << std::endl;
     //write the X3 header to the file
-    bufptr += writeX3Header(bufptr,   samplerate,  nchan,  blockSize, unixtime);
+    bufptr += writeX3Header(bufptr,  2, 1, nchan,  blockSize, nBits, unixtime);
     
     
-    std::cout << "Write " << bufptr -&buf[0] << " bytes to file" << std::endl;
+    std::cout << "Wav XML Header" << std::endl;
+    //next write the wav header to the file - need to know what to do with the X3 decompressed data.
+    bufptr += writeWavHeader(bufptr, 3, 2, samplerate, nchan, nBits, bitShift, "wav", unixtime);
+
+    //now write all the raw bits to a binary file i.e. the sud file.
+    
+    int nw;
+    for (int i=0; i<10; i++){
+        //write 10 wav chunks to a file.    Note that the XML chunk has to be wav
+        nw = x3Chunk(bufptr, 3, wavdata, nwav, nchan, unixtime, 0);
+        bufptr +=nw;
+        std::cout << "nw " << nw << " nwav "<< nwav << std::endl;
+
+    }
 
     wf.write(&buf[0], (bufptr -&buf[0])+1);
     
+    std::cout << "Write " << bufptr -&buf[0] << " bytes to file" << std::endl;
+
 //    int CHUNK_DATA_LEN = 2000;
 //    char chunkData[CHUNK_DATA_LEN];
 //    

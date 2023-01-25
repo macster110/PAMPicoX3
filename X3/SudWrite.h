@@ -32,16 +32,21 @@
 //#include "x3encoder.h"
 #include <time.h>
 #include "xml_if.h"
+#include "x3cmp.h"
 
-//a "magic" number - this is contianed in all chunk headers and would
+
+//A "magic" number - this is contianed in all chunk headers and would
 //potnetially allow for the extraction of chunks from a corrupted sud file.
 #define MAGIC_NUMBER  (0xA952)
 
-//the length of the sud header in bytes
+//The length of the sud header in bytes.
 #define SUD_HEADER_LEN  (30)
 
-//the length of chunk header in bytes
+//The length of chunk header in bytes.
 #define CHUNK_HEADER_LEN  (20)
+
+//the default chunk ID for XML header chunks.
+#define XML_CHUNK_ID (0)
 
 //the X3 block size to use
 
@@ -65,7 +70,7 @@ typedef struct {
 
 
 /**
- * The header data contained in a sud file
+ * The header data contained in a sud file.
  */
 typedef struct {
     time_t unixtime; // the unix time at start of file with a 1 second resolution.
@@ -95,36 +100,56 @@ int writeSudHeader(char* buf, SudHeader *sudHeader);
  * @param chunk - struct containing the chunk header.
  * @param swapendian true to swap the endian of the data. There seems little logical reason for this other tha  this is the way sud files work...
  */
-int writeSudChunk(char* buf,  SudChunk *chunk, bool swapendian);
+int writeSudChunk(char* buf, SudChunk *chunk, bool swapendian);
 
 /**
  * @brief writes the X3 header to a sud file. Note that this must be written before any X3 data in the file
  * or sud decompression will not work.
  * @param buf - the buffer to write to.
- * @param samplerate - the sample rate.
+ * @param chunkID - the chunk identifier.
+ * @param sourceID - the ID of the parent chunk - usuallty this is just 1.
  * @param nchan - the number of channels.
+ * @param nBits - the number of bits per sample.
  * @param blockSize - the block size. `
  */
-int writeX3Header(char* buf,  int samplerate, int nchan, int blockSize, time_t time);
+int writeX3Header(char* buf, short chunkID, short sourceID, int nchan, int blockSize, int nBits, time_t time);
+
+/**
+ * @brief writes the X3 header to a sud file. Note that this must be written before any X3 data in the file
+ * or sud decompression will not work.
+ * @param buf - the buffer to write to.
+ * @param chunkID - the chunk identifier.
+ * @param sourceID - the ID of the parent chunk - usuallty this is the chunkID of the X3 handler.
+ * @param sampleRate - the number of samples per second.
+ * @param nchan - the number of channels.
+ * @param nBits - the number of bits per sample.
+ * @param bitshift - usually 0, but, if using say a 15 bit number the ADC then the wav file might be bitshifted left to optomise
+ * @param suffix - the type of file to save to - usually this is "wav", however, could be "dwv" for saving click files or other bespoke endings.
+
+ * X3 compression. In this case bitshift would be 1 so that the sud unpacker knows to bitshift each sample by one.
+ */
+int writeWavHeader(char* buf, short chunkID, short sourceID, int sampleRate, int nchan, int nBits, short bitshift, const char *suffix, time_t time);
 
 /**
  * @brief Convenience function to write an X3 chunks.
  * @param buf - the buffer to write to.
- * @param data pointer to UNCOMPRESSED data - the data will be compressed using an X3 algorithm
+ * @param chunkID - the chunk identifier i.e. which audio stream tow rite to (sud files can have multiple audio streams)
+ * @param data pointer to UNCOMPRESSED data - the data will be compressed using an X3 algorithm. Note this assumes 16 bit data.
  * @param datalen - the length of the data .
  */
-int x3Chunk(char* buf,  char* data, int datalen, time_t unixtime, uint32_t micros);
+int x3Chunk(char* buf, short chunkID, short* data, int datalen, uint16_t nChan, time_t unixtime, uint32_t micros);
 
 /**
  * @brief Convenience function to add CSV data to a sud file.
  * @param data ponter to chunk data.
+ *
  */
-int csvChunk(char* buf,  char* data, int datalen, time_t unixtime, uint32_t micros);
+int csvChunk(char* buf, short chunkID, char* data, int datalen, time_t unixtime, uint32_t micros);
 
 /**
  * @brief Convenience function to add XML chunks to a sud file.
  */
-int xmlChunk(char* buf,  char* data, int dataLen, time_t unixtime, uint32_t micros);
+int xmlChunk(char* buf, char* data, int dataLen, time_t unixtime, uint32_t micros);
 
 
 #endif /* SudWrite_h */

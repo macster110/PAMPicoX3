@@ -45,7 +45,7 @@ XBuff x3compress(short* data, ushort nChan, ushort soundFrames){
 //        swapBuff[i] = htons2(swapBuff[i]);
 //    }
     
-    std::cout << "Number of samples: " << ibuff->nsamps << " nw " << nw << std::endl;
+   // std::cout << "Number of samples: " << ibuff->nsamps << " nw " << nw << std::endl;
     pbuff.nsamps = nw;
     
     return pbuff;
